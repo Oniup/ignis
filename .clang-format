@@ -1,0 +1,28 @@
+---
+# Core
+BasedOnStyle: LLVM
+# BreakBeforeBraces: Mozilla
+UseTab: Never
+InsertBraces: true
+IncludeBlocks: Merge
+ColumnLimit: 80
+# Alignment
+PointerAlignment: Left
+QualifierAlignment: Left
+ReferenceAlignment: Pointer
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: true
+AlwaysBreakTemplateDeclarations: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveBitFields: true
+AlignConsecutiveDeclarations: true
+AlignConsecutiveMacros: true
+# Indentation
+IndentWidth: 2
+IndentWrappedFunctionNames: true
+ConstructorInitializerIndentWidth: 4
+PackConstructorInitializers: NextLineOnly
+AllowShortFunctionsOnASingleLine: InlineOnly
+IndentPPDirectives: AfterHash
+NamespaceIndentation: Inner
+...
