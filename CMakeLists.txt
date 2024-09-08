@@ -20,4 +20,4 @@ option(BUILD_APP "Build game editor (.exe)" ON)
 option(BUILD_LIBRARY "Build a static (.lib) runtime library" ON)
 option(BUILD_TESTS "Build runtime tests" OFF)
 
-add_subdirectory(source)
+add_subdirectory(src)

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define O_ASCII_RESET "\e[0m"
+#define ASCII_RESET "\e[0m"
 
 static log_context_t s_context;
 
@@ -32,7 +32,7 @@ static void log_terminal_print_pfn(log_output_t* output, log_severity_t lv,
   } else {
     fp = stdout;
   }
-  fprintf(fp, "%s%s%s", severity_to_color(lv), msg, O_ASCII_RESET);
+  fprintf(fp, "%s%s%s", severity_to_color(lv), msg, ASCII_RESET);
   fflush(fp);
 }
 
