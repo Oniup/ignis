@@ -1,6 +1,6 @@
 #include "tests/containers/test_containers.h"
 #include <ignis/core/debug.h>
-#include <ignis/core/memory/memory.h>
+#include <ignis/core/memory.h>
 #include <stdio.h>
 #include <string.h>
 

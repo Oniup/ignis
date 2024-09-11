@@ -1,6 +1,6 @@
 #include <ignis/containers/dyarr.h>
 #include <ignis/core/debug.h>
-#include <ignis/core/memory/memory.h>
+#include <ignis/core/memory.h>
 
 int main(int argc, char** argv) {
   log_context_init();

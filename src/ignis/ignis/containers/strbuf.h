@@ -5,25 +5,17 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef struct strview strview_t;
+
 typedef struct strbuf {
   usize len;
   usize cap;
   char* cstr;
 } strbuf_t;
 
-typedef struct strview {
-  usize       len;
-  const char* cstr;
-} strview_t;
-
 #define EMPTY_STRBUF                                                           \
   (strbuf_t) {                                                                 \
     .len = 0, .cap = 0, .cstr = NULL,                                          \
-  }
-
-#define EMPTY_STRVIEW                                                          \
-  (strview_t) {                                                                \
-    .len = 0, .cstr = NULL,                                                    \
   }
 
 void strbuf_destroy(strbuf_t* str);
@@ -49,6 +41,8 @@ strbuf_t _strbuf_create_cap(i32 len);
       strbuf_t *: _strbuf_create,                                              \
       strview_t *: _strbuf_create_view,                                        \
       char*: _strbuf_create_cstr,                                              \
+      const strbuf_t*: _strbuf_create,                                         \
+      const strview_t*: _strbuf_create_view,                                   \
       const char*: _strbuf_create_cstr,                                        \
       int: _strbuf_create_cap)(str)
 
@@ -73,6 +67,8 @@ b8 _strbuf_cpy_cstr(const strbuf_t* dest, const char* src);
       strbuf_t *: _strbuf_cpy,                                                 \
       strview_t *: _strbuf_cpy_view,                                           \
       char*: _strbuf_cpy_cstr,                                                 \
+      const strbuf_t*: _strbuf_cpy,                                            \
+      const strview_t*: _strbuf_cpy_view,                                      \
       const char*: _strbuf_cpy_cstr)(dest, src)
 
 // TODO:
@@ -85,7 +81,22 @@ b8 _strbuf_append_cstr(const strbuf_t* dest, const char* src);
       strbuf_t *: _strbuf_append,                                              \
       strview_t *: _strbuf_append_view,                                        \
       char*: _strbuf_append_cstr,                                              \
+      const strbuf_t*: _strbuf_append,                                         \
+      const strview_t*: _strbuf_append_view,                                   \
       const char*: _strbuf_append_cstr)(dest, src)
+
+b8 _strbuf_cmp_strbuf(const strbuf_t* str1, const strbuf_t* str2);
+b8 _strbuf_cmp_view(const strbuf_t* str, const strview_t* view);
+b8 _strbuf_cmp_cstr(const strbuf_t* str, const char* cstr);
+
+#define strbuf_cmp(str1, str2)                                                 \
+  _Generic((str2),                                                             \
+      strbuf_t *: _strbuf_append,                                              \
+      strview_t *: _strbuf_append_view,                                        \
+      char*: _strbuf_append_cstr,                                              \
+      const strbuf_t*: _strbuf_append,                                         \
+      const strview_t*: _strbuf_append_view,                                   \
+      const char*: _strbuf_append_cstr)(str1, str2)
 
 // TODO:
 usize _strbuf_find(const strbuf_t* dest, const strbuf_t* search);
@@ -97,6 +108,8 @@ usize _strbuf_find_cstr(const strbuf_t* dest, const char* search);
       strbuf_t *: _strbuf_find,                                                \
       strview_t *: _strbuf_find_view,                                          \
       char*: _strbuf_find_cstr,                                                \
+      const strbuf_t*: _strbuf_find,                                           \
+      const strview_t*: _strbuf_find_view,                                     \
       const char*: _strbuf_find_cstr)(src, find)
 
 // TODO:
@@ -109,6 +122,8 @@ usize _strbuf_rfind_cstr(const strbuf_t* dest, const char* search);
       strbuf_t *: _strbuf_rfind,                                               \
       strview_t *: _strbuf_rfind_view,                                         \
       char*: _strbuf_rfind_cstr,                                               \
+      const strbuf_t*: _strbuf_rfind,                                          \
+      const strview_t*: _strbuf_rfind_view,                                    \
       const char*: _strbuf_rfind_cstr)(src, find)
 
 // TODO:
@@ -121,44 +136,9 @@ i32* _strbuf_find_range_cstr(const strbuf_t* src, const char* search);
       strbuf_t *: _strbuf_find_range,                                          \
       strview_t *: _strbuf_find_range_view,                                    \
       char*: _strbuf_find_range_cstr,                                          \
+      const strbuf_t*: _strbuf_find_range,                                     \
+      const strview_t*: _strbuf_find_range_view,                               \
       const char*: _strbuf_find_range_cstr)(dest, src)
-
-FORCE_INLINE strview_t _strview_ref(const strbuf_t* str) {
-  if (str != NULL) {
-    return EMPTY_STRVIEW;
-  }
-  return (strview_t) {
-      .len  = str->len,
-      .cstr = str->cstr,
-  };
-}
-
-FORCE_INLINE strview_t _strview_ref_view(const strview_t* str) {
-  if (str != NULL) {
-    return EMPTY_STRVIEW;
-  }
-  return (strview_t) {
-      .len  = str->len,
-      .cstr = str->cstr,
-  };
-}
-
-FORCE_INLINE strview_t _strview_ref_cstr(const char* str) {
-  if (str != NULL) {
-    return EMPTY_STRVIEW;
-  }
-  return (strview_t) {
-      .len  = strlen(str),
-      .cstr = str,
-  };
-}
-
-#define strview(str)                                                           \
-  _Generic((src),                                                              \
-      strbuf_t *: _strbuf_ref,                                                 \
-      strview_t *: _strbuf_ref_view,                                           \
-      char*: _strbuf_ref_cstr,                                                 \
-      const char*: _strbuf_ref_cstr)(str)
 
 #define strbuf_cat(str, ...)                                                   \
   ({                                                                           \

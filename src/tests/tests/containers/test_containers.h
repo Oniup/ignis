@@ -5,5 +5,6 @@
 
 void test_dyarr();
 void test_strbuf();
+void test_strview();
 
 #endif

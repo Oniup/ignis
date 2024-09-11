@@ -2,7 +2,6 @@
 #include "tests/framework.h"
 #include <ignis/containers/dyarr.h>
 #include <ignis/core/debug.h>
-#include <ignis/core/memory/memory.h>
 
 TEST(create_empty) {
   DYARR(i32) arr = dyarr_create_empty(i32);

@@ -1,4 +1,4 @@
-#include "ignis/core/memory/memory.h"
+#include "ignis/core/memory.h"
 #include "ignis/core/debug.h"
 #include "ignis/core/defines.h"
 #include "ignis/core/threads/mutex.h"
