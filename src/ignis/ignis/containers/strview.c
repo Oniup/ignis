@@ -1,7 +1,7 @@
 #include "ignis/containers/strview.h"
 
 strview_t _strview_ref(const strbuf_t* str) {
-  if (str != NULL) {
+  if (!str) {
     return EMPTY_STRVIEW;
   }
   return (strview_t) {
@@ -11,7 +11,7 @@ strview_t _strview_ref(const strbuf_t* str) {
 }
 
 strview_t _strview_ref_view(const strview_t* str) {
-  if (str != NULL) {
+  if (!str) {
     return EMPTY_STRVIEW;
   }
   return (strview_t) {
@@ -21,7 +21,7 @@ strview_t _strview_ref_view(const strview_t* str) {
 }
 
 strview_t _strview_ref_cstr(const char* str) {
-  if (str != NULL) {
+  if (!str) {
     return EMPTY_STRVIEW;
   }
   return (strview_t) {

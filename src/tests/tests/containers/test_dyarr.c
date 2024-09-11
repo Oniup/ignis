@@ -3,7 +3,7 @@
 #include <ignis/containers/dyarr.h>
 #include <ignis/core/debug.h>
 
-TEST(create_empty) {
+TEST(CreateEmpty) {
   DYARR(i32) arr = dyarr_create_empty(i32);
   EQUALS(dyarr_len(arr), 0);
   EQUALS(dyarr_cap(arr), 0);
@@ -12,7 +12,7 @@ TEST(create_empty) {
 }
 END_TEST
 
-TEST(create_size) {
+TEST(CreateWithSpecifiedSize) {
   DYARR(i32) arr = dyarr_create_size(i32, 10, 20);
   defer(dyarr_destroy(arr)) {
     EQUALS(dyarr_len(arr), 10);
@@ -25,7 +25,7 @@ TEST(create_size) {
 }
 END_TEST
 
-TEST(create_with_capacity) {
+TEST(CreateWithSpecifiedCapacity) {
   DYARR(i32) arr = dyarr_create(i32, 20);
   EQUALS(dyarr_len(arr), 0);
   EQUALS(dyarr_cap(arr), 20);
@@ -34,7 +34,7 @@ TEST(create_with_capacity) {
 }
 END_TEST
 
-TEST(push_without_increasing_capacity) {
+TEST(PushWithoutIncreasingCapacity) {
   DYARR(usize) arr = dyarr_create(usize, 20);
   defer(dyarr_destroy(arr)) {
     usize cap = dyarr_cap(arr);
@@ -59,7 +59,7 @@ TEST(push_without_increasing_capacity) {
 }
 END_TEST
 
-TEST(push_and_increase_capacity) {
+TEST(PushAndIncreaseCapacity) {
   DYARR(i32) arr = dyarr_create(i32, 5);
   defer(dyarr_destroy(arr)) {
     EQUALS(dyarr_len(arr), 0);
@@ -86,7 +86,7 @@ TEST(push_and_increase_capacity) {
 }
 END_TEST
 
-TEST(resize) {
+TEST(Resize) {
   DYARR(i32) arr = dyarr_create_empty(i32);
   defer(dyarr_destroy(arr)) {
     dyarr_resize(arr, 10);
@@ -97,7 +97,7 @@ TEST(resize) {
 }
 END_TEST
 
-TEST(resize_capacity) {
+TEST(ResizeCapacityNotLength) {
   DYARR(i32) arr = dyarr_create_empty(i32);
   defer(dyarr_destroy(arr)) {
     dyarr_realloc(arr, 10);
@@ -108,7 +108,7 @@ TEST(resize_capacity) {
 }
 END_TEST
 
-TEST(push_front) {
+TEST(PushFront) {
   DYARR(i32) arr = dyarr_create_empty(i32);
   defer(dyarr_destroy(arr)) {
     for (usize i = 0; i < 10; i++) {
@@ -125,7 +125,7 @@ TEST(push_front) {
 }
 END_TEST
 
-TEST(insert) {
+TEST(Insert) {
   DYARR(i32) arr = dyarr_create_empty(i32);
   defer(dyarr_destroy(arr)) {
     i32 val = 10;
@@ -141,7 +141,7 @@ TEST(insert) {
 }
 END_TEST
 
-TEST(pop) {
+TEST(PopBack) {
   DYARR(i32) arr = dyarr_create_empty(i32);
   defer(dyarr_destroy(arr)) {
     i32 val = 10;
@@ -155,7 +155,7 @@ TEST(pop) {
 }
 END_TEST
 
-TEST(pop_at) {
+TEST(PopAtIndex) {
   DYARR(i32) arr = dyarr_create_empty(i32);
   defer(dyarr_destroy(arr)) {
     i32 val = 10;
@@ -173,20 +173,20 @@ TEST(pop_at) {
 }
 END_TEST
 
-START_TEST_SUITE(test_dyarr) {
-  RUN(create_empty);
-  RUN(create_size);
-  RUN(create_with_capacity);
+START_TEST_SUITE(TestDynamicArray) {
+  RUN(CreateEmpty);
+  RUN(CreateWithSpecifiedSize);
+  RUN(CreateWithSpecifiedCapacity);
 
-  RUN(resize);
-  RUN(resize_capacity);
+  RUN(Resize);
+  RUN(ResizeCapacityNotLength);
 
-  RUN(push_without_increasing_capacity);
-  RUN(push_and_increase_capacity);
+  RUN(PushWithoutIncreasingCapacity);
+  RUN(PushAndIncreaseCapacity);
 
-  RUN(push_front);
-  RUN(insert);
-  RUN(pop);
-  RUN(pop_at);
+  RUN(PushFront);
+  RUN(Insert);
+  RUN(PopBack);
+  RUN(PopAtIndex);
 }
 END_TEST_SUITE

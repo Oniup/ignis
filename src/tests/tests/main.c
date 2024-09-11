@@ -16,8 +16,9 @@ typedef struct {
 
 static registered_test_t tests[] = {
     // Containers
-    REGISTER_TEST(test_dyarr),
-    REGISTER_TEST(test_strbuf),
+    REGISTER_TEST(TestDynamicArray),
+    REGISTER_TEST(TestStringView),
+    REGISTER_TEST(TestStringBuffer),
 };
 
 void run_tests(i32 argc, char** argv) {
