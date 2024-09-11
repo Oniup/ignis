@@ -1,5 +1,6 @@
 #include "tests/containers/test_containers.h"
-#include "tests/framework.h"
+#include <ignis/core/debug.h>
+#include <ignis/core/memory/memory.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -19,7 +20,7 @@ static registered_test_t tests[] = {
     REGISTER_TEST(test_strbuf),
 };
 
-int main(i32 argc, char** argv) {
+void run_tests(i32 argc, char** argv) {
   usize test_count = sizeof(tests) / sizeof(tests[0]);
 
   for (usize i = 0; i < test_count; i++) {
@@ -36,5 +37,19 @@ int main(i32 argc, char** argv) {
       test->func();
     }
   }
+}
+
+int main(i32 argc, char** argv) {
+  log_context_init();
+  log_context_add(log_terminal_output(LOG_DEFAULT_SEVERITY_FILTER |
+                                      LOG_SEVERITY_INFO | LOG_SEVERITY_TRACE |
+                                      LOG_SEVERITY_VERBOSE));
+  log_context_add(log_file_output(LOG_DEFAULT_SEVERITY_FILTER));
+  mem_system_init();
+
+  run_tests(argc, argv);
+
+  mem_system_destroy();
+  log_context_destroy();
   return 0;
 }

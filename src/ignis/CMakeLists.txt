@@ -13,3 +13,10 @@ target_compile_definitions(ignis
     IGNIS_VERSION_PATCH=${VERSION_PATCH}
     IGNIS_VERSION_STR="${VERSION_STR}"
 )
+
+if (${TRACE_MEMORY_STATS})
+  target_compile_definitions(ignis
+    PUBLIC
+    IGNIS_TRACE_MEMORY_STATS=${TRACE_MEMORY_STATS}
+  )
+endif()

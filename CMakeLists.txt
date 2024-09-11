@@ -17,7 +17,9 @@ project(Ignis
 )
 
 option(BUILD_APP "Build game editor (.exe)" ON)
+
 option(BUILD_LIBRARY "Build a static (.lib) runtime library" ON)
 option(BUILD_TESTS "Build runtime tests" OFF)
+option(TRACE_MEMORY_STATS "Track memory allocations count and total size in bytes" ON)
 
 add_subdirectory(src)

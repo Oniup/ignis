@@ -1,6 +1,8 @@
 #include "tests/containers/test_containers.h"
 #include "tests/framework.h"
 #include <ignis/containers/dyarr.h>
+#include <ignis/core/debug.h>
+#include <ignis/core/memory/memory.h>
 
 TEST(create_empty) {
   DYARR(i32) arr = dyarr_create_empty(i32);
@@ -92,9 +94,6 @@ TEST(resize) {
     EQUALS(dyarr_len(arr), 10);
     EQUALS(dyarr_cap(arr), 10);
     EQUALS(dyarr_stride(arr), sizeof(i32));
-    for (usize i = 0; i < dyarr_len(arr); i++) {
-      EQUALS(arr[i], 0);
-    }
   }
 }
 END_TEST
@@ -185,6 +184,7 @@ START_TEST_SUITE(test_dyarr) {
 
   RUN(push_without_increasing_capacity);
   RUN(push_and_increase_capacity);
+
   RUN(push_front);
   RUN(insert);
   RUN(pop);

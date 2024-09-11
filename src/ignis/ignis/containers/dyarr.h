@@ -30,7 +30,7 @@ void* _dyarr_realloc(void* arr, usize cap);
 
 #define dyarr_resize(_arr, _size)                                              \
   ({                                                                           \
-    if (_arr == NULL) {                                                        \
+    if (_arr) {                                                                \
       _arr = _dyarr_resize(_arr, _size);                                       \
     } else {                                                                   \
       _arr = _dyarr_create(sizeof(*_arr), _size, _size);                       \
@@ -39,7 +39,7 @@ void* _dyarr_realloc(void* arr, usize cap);
 
 #define dyarr_realloc(_arr, _cap)                                              \
   ({                                                                           \
-    if (_arr == NULL) {                                                        \
+    if (_arr) {                                                                \
       _arr = _dyarr_realloc(_arr, _cap);                                       \
     } else {                                                                   \
       _arr = _dyarr_create(sizeof(*_arr), 0, _cap);                            \
