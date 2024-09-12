@@ -97,7 +97,7 @@ u64 _strview_find(const strview_t* src, const strbuf_t* search) {
 
 u64 _strview_find_view(const strview_t* src, const strview_t* search) {
   if (search->len < src->len) {
-    for (u64 i = 0; i < src->len - search->len; i++) {
+    for (u64 i = 0; i < src->len - search->len + 1; i++) {
       strview_t slice = str_slice(src, i, i + search->len);
       if (strview_cmp(&slice, search)) {
         return i;
@@ -145,12 +145,13 @@ DYARR(u64) _strview_find_range(const strview_t* src, const strbuf_t* search) {
 
 DYARR(u64)
 _strview_find_range_view(const strview_t* src, const strview_t* search) {
-  DYARR(u64) arr  = dyarr_create_empty(u64);
-  u64       pos   = 0;
-  strview_t slice = strview(src);
-  while ((pos = strview_find(&slice, search)) != NO_POS) {
-    dyarr_push_val(arr, &pos);
-    slice = str_slice(&slice, pos, NO_POS);
+  DYARR(u64) arr = dyarr_create_empty(u64);
+  for (u64 i = 0; i < src->len - search->len + 1; i++) {
+    strview_t slice = str_slice(src, i, i + search->len);
+    if (strview_cmp(&slice, search)) {
+      dyarr_push_val(arr, &i);
+      i += search->len - 1;
+    }
   }
   return arr;
 }

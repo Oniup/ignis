@@ -173,7 +173,7 @@ TEST(PopAtIndex) {
 }
 END_TEST
 
-START_TEST_SUITE(TestDynamicArray) {
+START_TEST_SUITE(DynamicArray) {
   RUN(CreateEmpty);
   RUN(CreateWithSpecifiedSize);
   RUN(CreateWithSpecifiedCapacity);

@@ -111,12 +111,34 @@ TEST(ReverseFind) {
 }
 END_TEST
 
-START_TEST_SUITE(TestStringView) {
+TEST(FindRange) {
+  const char* cstr   = "This test is a test string test";
+  DYARR(u64) indices = NULL;
+
+  strview_t view = strview(cstr);
+  indices        = strview_find_range(&view, "test");
+  defer(dyarr_destroy(indices)) {
+    EQUALS(dyarr_len(indices), 3);
+    EQUALS(indices[0], 5);
+    EQUALS(indices[1], 15);
+    EQUALS(indices[2], 27);
+  }
+
+  strview_t search = strview("not found");
+  indices          = strview_find_range(&view, &search);
+  defer(dyarr_destroy(indices)) {
+    EQUALS(dyarr_len(indices), 0);
+  }
+}
+END_TEST
+
+START_TEST_SUITE(StringView) {
   RUN(CStringUtilities);
   RUN(GetRef);
   RUN(Compare);
   RUN(Slice);
   RUN(Find);
   RUN(ReverseFind);
+  RUN(FindRange);
 }
 END_TEST_SUITE

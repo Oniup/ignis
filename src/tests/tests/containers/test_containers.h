@@ -3,8 +3,8 @@
 
 #include <ignis/core/defines.h>
 
-void TestDynamicArray();
-void TestStringBuffer();
-void TestStringView();
+void DynamicArray();
+void StringBuffer();
+void StringView();
 
 #endif
