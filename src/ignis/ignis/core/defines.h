@@ -90,8 +90,6 @@ typedef char    byte;
 #define IMIN(x, y) (x < y ? x : y)
 #define IMAX(x, y) (x > y ? x : y)
 
-#define MEM_ALLOC(_byte_size)         malloc(_byte_size)
-#define MEM_REALLOC(_ptr, _byte_size) realloc(_ptr, _byte_size)
-#define MEM_DESTROY(_ptr)             free(_ptr)
+#define NO_POS UINT64_MAX
 
 #endif

@@ -4,9 +4,9 @@
 #include <ignis/core/cstr.h>
 
 TEST(CStringUtilities) {
-  const char* str_a = "This is a test";
-  EQUALS(CSTR_LEN(str_a), strlen(str_a));
-  EQUALS(CSTR_CMP(str_a, str_a), strncmp(str_a, str_a, strlen(str_a)) == 0);
+  const char* cstr = "This is a test";
+  EQUALS(CSTR_LEN(cstr), strlen(cstr));
+  EQUALS(CSTR_CMP(cstr, cstr), strncmp(cstr, cstr, strlen(cstr)) == 0);
 }
 END_TEST
 
@@ -16,22 +16,22 @@ TEST(GetRef) {
   usize       str_a_len = strlen(str_a);
   usize       str_b_len = strlen(str_b);
 
-  strview_t strview = strview(str_a);
-  EQUALS(strview.len, str_a_len);
+  strview_t view = strview(str_a);
+  EQUALS(view.len, str_a_len);
   for (usize i = 0; i < str_a_len; i++) {
-    EQUALS(strview.cstr[i], str_a[i]);
+    EQUALS(view.cstr[i], str_a[i]);
   }
 
-  strview = strview(str_b);
-  EQUALS(strview.len, str_b_len);
+  view = strview(str_b);
+  EQUALS(view.len, str_b_len);
   for (usize i = 0; i < str_b_len; i++) {
-    EQUALS(strview.cstr[i], str_b[i]);
+    EQUALS(view.cstr[i], str_b[i]);
   }
 
-  strview_t strview_b = strview(&strview);
-  EQUALS(strview.len, strview_b.len);
+  strview_t view_b = strview(&view);
+  EQUALS(view.len, view_b.len);
   for (usize i = 0; i < str_b_len; i++) {
-    EQUALS(strview.cstr[i], strview_b.cstr[i]);
+    EQUALS(view.cstr[i], view_b.cstr[i]);
   }
 }
 END_TEST
@@ -39,11 +39,84 @@ END_TEST
 TEST(Compare) {
   const char*     str_a = "C String with a const attribute";
   const strview_t str_b = strview("This is a test");
+
+  EQUALS(strview_cmp(&str_b, str_a), false);
+  EQUALS(strview_cmp(&str_b, &str_b), true);
+
+  strview_t str_c = strview("This is a test");
+  EQUALS(strview_cmp(&str_b, &str_c), true);
+}
+END_TEST
+
+TEST(Slice) {
+  const char* cstr     = "This is a test string";
+  u64         cstr_len = strlen(cstr);
+
+  strview_t view   = strview(cstr);
+  strview_t sliced = str_slice(&view, 5, 10);
+  EQUALS(sliced.len, 5);
+  for (u64 i = 0; i < 5; i++) {
+    EQUALS(sliced.cstr[i], cstr[5 + i]);
+  }
+
+  sliced = str_slice(&view, 0, 5);
+  EQUALS(sliced.len, 5);
+  for (u64 i = 0; i < 5; i++) {
+    EQUALS(sliced.cstr[i], cstr[i]);
+  }
+
+  sliced = str_slice(&view, 5, NO_POS);
+  EQUALS(sliced.len, cstr_len - 5);
+  for (u64 i = 5; i < cstr_len - 5; i++) {
+    EQUALS(sliced.cstr[i], cstr[5 + i]);
+  }
+}
+END_TEST
+
+TEST(Find) {
+  const char* cstr = "This is a test string";
+
+  strview_t view  = strview(cstr);
+  u64       index = strview_find(&view, "test");
+  EQUALS(index, 10);
+
+  index = strview_find(&view, "not found");
+  EQUALS(index, NO_POS);
+
+  strview_t search = strview("test");
+  index            = strview_find(&view, &search);
+  EQUALS(index, 10);
+
+  index = strview_find(&view, "not found");
+  EQUALS(index, NO_POS);
+}
+END_TEST
+
+TEST(ReverseFind) {
+  const char* cstr = "This is a test string";
+
+  strview_t view  = strview(cstr);
+  u64       index = strview_rfind(&view, "test");
+  EQUALS(index, 10);
+
+  index = strview_rfind(&view, "not found");
+  EQUALS(index, NO_POS);
+
+  strview_t search = strview("test");
+  index            = strview_rfind(&view, &search);
+  EQUALS(index, 10);
+
+  index = strview_rfind(&view, "not found");
+  EQUALS(index, NO_POS);
 }
 END_TEST
 
 START_TEST_SUITE(TestStringView) {
   RUN(CStringUtilities);
   RUN(GetRef);
+  RUN(Compare);
+  RUN(Slice);
+  RUN(Find);
+  RUN(ReverseFind);
 }
 END_TEST_SUITE

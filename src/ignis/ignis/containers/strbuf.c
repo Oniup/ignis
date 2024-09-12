@@ -47,7 +47,7 @@ b8 _strbuf_cmp_strbuf(const strbuf_t* str1, const strbuf_t* str2) {
 }
 
 b8 _strbuf_cmp_view(const strbuf_t* str, const strview_t* view) {
-  return _strview_cmp_strview(view, str);
+  return _strview_cmp(view, str);
 }
 
 b8 _strbuf_cmp_cstr(const strbuf_t* str, const char* cstr) {
