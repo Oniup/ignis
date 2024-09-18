@@ -61,7 +61,10 @@ strview_t _strview_ref_cstr(const char* str) {
 }
 
 b8 _strview_cmp(const strview_t* view, const strbuf_t* str) {
-  if ((!str || !view) && (str->cstr == view->cstr) && (str->len != view->len)) {
+  if ((!str || !view) || (str->len != view->len)) {
+    return false;
+  }
+  if (view->cstr == str->cstr) {
     return true;
   }
   for (u64 i = 0; i < view->len; i++) {
@@ -73,8 +76,10 @@ b8 _strview_cmp(const strview_t* view, const strbuf_t* str) {
 }
 
 b8 _strview_cmp_view(const strview_t* view1, const strview_t* view2) {
-  if ((!view1 || !view2) && (view1->cstr == view2->cstr) &&
-      (view1->len != view2->len)) {
+  if ((!view1 || !view2) || (view1->len != view2->len)) {
+    return false;
+  }
+  if (view1->cstr == view2->cstr) {
     return true;
   }
   for (u64 i = 0; i < view2->len; i++) {
@@ -119,7 +124,7 @@ u64 _strview_rfind(const strview_t* src, const strbuf_t* search) {
 
 u64 _strview_rfind_view(const strview_t* src, const strview_t* search) {
   if (search->len < src->len) {
-    for (u64 i = src->len - search->len - 1; i > 0; i--) {
+    for (u64 i = src->len - search->len; i > 0; i--) {
       strview_t slice = str_slice(src, i, i + search->len);
       if (strview_cmp(&slice, search)) {
         return i;

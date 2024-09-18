@@ -6,8 +6,8 @@
 #include "ignis/core/defines.h"
 
 typedef struct strview {
-  u64         len;
   const char* cstr;
+  u64         len;
 } strview_t;
 
 #define EMPTY_STRVIEW                                                          \
@@ -60,27 +60,27 @@ u64 _strview_find(const strview_t* src, const strbuf_t* search);
 u64 _strview_find_view(const strview_t* src, const strview_t* search);
 u64 _strview_find_cstr(const strview_t* src, const char* search);
 
-#define strview_find(src, find)                                                \
-  _Generic((find),                                                             \
+#define strview_find(src, search)                                              \
+  _Generic((search),                                                           \
       strbuf_t *: _strview_find,                                               \
       strview_t *: _strview_find_view,                                         \
       char*: _strview_find_cstr,                                               \
       const strbuf_t*: _strview_find,                                          \
       const strview_t*: _strview_find_view,                                    \
-      const char*: _strview_find_cstr)(src, find)
+      const char*: _strview_find_cstr)(src, search)
 
 u64 _strview_rfind(const strview_t* src, const strbuf_t* search);
 u64 _strview_rfind_view(const strview_t* src, const strview_t* search);
 u64 _strview_rfind_cstr(const strview_t* src, const char* search);
 
-#define strview_rfind(src, find)                                               \
-  _Generic((find),                                                             \
+#define strview_rfind(src, search)                                             \
+  _Generic((search),                                                           \
       strbuf_t *: _strview_rfind,                                              \
       strview_t *: _strview_rfind_view,                                        \
       char*: _strview_rfind_cstr,                                              \
       const strbuf_t*: _strview_rfind,                                         \
       const strview_t*: _strview_rfind_view,                                   \
-      const char*: _strview_rfind_cstr)(src, find)
+      const char*: _strview_rfind_cstr)(src, search)
 
 DYARR(u64) _strview_find_range(const strview_t* src, const strbuf_t* search);
 DYARR(u64)
@@ -88,13 +88,13 @@ _strview_find_range_view(const strview_t* src, const strview_t* search);
 DYARR(u64) _strview_find_range_cstr(const strview_t* src, const char* search);
 
 // Returns dynamic array and will need to be destroyed
-#define strview_find_range(src, find)                                          \
-  _Generic((find),                                                             \
+#define strview_find_range(src, search)                                        \
+  _Generic((search),                                                           \
       strbuf_t *: _strview_find_range,                                         \
       strview_t *: _strview_find_range_view,                                   \
       char*: _strview_find_range_cstr,                                         \
       const strbuf_t*: _strview_find_range,                                    \
       const strview_t*: _strview_find_range_view,                              \
-      const char*: _strview_find_range_cstr)(src, find)
+      const char*: _strview_find_range_cstr)(src, search)
 
 #endif
