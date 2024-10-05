@@ -12,11 +12,11 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries)
 
 project(Ignis
-  LANGUAGES C
-  VERSION ${VERSION_STR}
+    LANGUAGES C
+    VERSION ${VERSION_STR}
 )
 
-option(BUILD_APP "Build game editor (.exe)" ON)
+option(BUILD_EDITOR "Build game editor (.exe)" ON)
 
 option(BUILD_LIBRARY "Build a static (.lib) runtime library" ON)
 option(BUILD_TESTS "Build runtime tests" OFF)

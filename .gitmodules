@@ -1,0 +1,14 @@
+[submodule "src/lib/cglm"]
+	path = src/lib/cglm
+	url = https://github.com/recp/cglm.git
+	tag = v0.9.4
+[submodule "src/lib/glfw"]
+	path = src/lib/glfw
+	url = https://github.com/glfw/glfw.git
+	tag = 3.4
+[submodule "src/lib/cthreads/CThreads"]
+	path = src/lib/cthreads/CThreads
+	url = https://github.com/PerformanC/CThreads.git
+[submodule "src/lib/stb/stb"]
+	path = src/lib/stb/stb
+	url = https://github.com/nothings/stb.git

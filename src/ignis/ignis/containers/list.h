@@ -4,14 +4,14 @@
 #include "ignis/core/defines.h"
 
 typedef struct list_elmt_hdr {
-  struct list_elmt_hdr* prev;
-  struct list_elmt_hdr* next;
+    struct list_elmt_hdr* prev;
+    struct list_elmt_hdr* next;
 } list_elmt_hdr_t;
 
 typedef struct {
-  usize            elmt_size;
-  list_elmt_hdr_t* beg;
-  list_elmt_hdr_t* end;
+    usize            elmt_size;
+    list_elmt_hdr_t* beg;
+    list_elmt_hdr_t* end;
 } list_t;
 
 list_t list_create(usize elmt_size);

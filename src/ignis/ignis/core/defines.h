@@ -24,36 +24,36 @@ typedef char    byte;
 #define false 0
 
 #if defined(__clang__) || defined(__GNUC__)
-#  define GENERATE_TRAP() __builtin_trap()
-#  define THREADLOCAL     __thread
-#  define STDCALL         __attribute__((stdcall))
-#  define CDECL           __attribute__((cdecl))
-#  define RESTRICT        __restrict__
-#  define FORCE_INLINE    __attribute__((always_inline)) inline
-#  define FORCE_NOINLINE  __attribute__((noinline))
-#  define NO_RETURN       __attribute__((noreturn))
-#  define DEPRECATED      [[deprecated]]
-#  define STATIC_ASSERT   _Static_assert
+#    define GENERATE_TRAP() __builtin_trap()
+#    define THREADLOCAL     __thread
+#    define STDCALL         __attribute__((stdcall))
+#    define CDECL           __attribute__((cdecl))
+#    define RESTRICT        __restrict__
+#    define FORCE_INLINE    __attribute__((always_inline)) inline
+#    define FORCE_NOINLINE  __attribute__((noinline))
+#    define NO_RETURN       __attribute__((noreturn))
+#    define DEPRECATED      [[deprecated]]
+#    define STATIC_ASSERT   _Static_assert
 
 #elif defined(_MSC_VER)
-#  if _MSC_VER < 1900
-#    error "Required Visual Studio 2015 or newer."
-#  endif
-#  define GENERATE_TRAP() __debugbreak()
-#  define THREADLOCAL     __declspec(thread)
-#  define STDCALL         __stdcall
-#  define CDECL           __cdecl
-#  define RESTRICT        __restrict
-#  define FORCE_INLINE    __forceinline
-#  define FORCE_NOINLINE  __declspec(noinline)
-#  define NO_RETURN       __declspec(noreturn)
-#  define DEPRECATED      __declspec(deprecated)
-#  define STATIC_ASSERT   static_assert
+#    if _MSC_VER < 1900
+#        error "Required Visual Studio 2015 or newer."
+#    endif
+#    define GENERATE_TRAP() __debugbreak()
+#    define THREADLOCAL     __declspec(thread)
+#    define STDCALL         __stdcall
+#    define CDECL           __cdecl
+#    define RESTRICT        __restrict
+#    define FORCE_INLINE    __forceinline
+#    define FORCE_NOINLINE  __declspec(noinline)
+#    define NO_RETURN       __declspec(noreturn)
+#    define DEPRECATED      __declspec(deprecated)
+#    define STATIC_ASSERT   static_assert
 
-#  undef __PRETTY_FUNCTION__
-#  define __PRETTY_FUNCTION__ __FUNCS_
+#    undef __PRETTY_FUNCTION__
+#    define __PRETTY_FUNCTION__ __FUNCS_
 #else
-#  error "Unknown compiler"
+#    error "Unknown compiler"
 #endif
 
 #define _INTL_COMBINE_MACRO_VAR(a, b) a##b
@@ -69,23 +69,23 @@ typedef char    byte;
     _92, _93, _94, _95, _96, _97, _98, _99, _100, _101, _102, _103, _104,      \
     _105, _106, _107, _108, _109, _110, _111, _112, _113, _114, _115, _116,    \
     _117, _118, _119, _120, _121, _122, _123, _124, _125, _126, _127, N, ...)  \
-  N
+    N
 #define _INTL_RSEQ_N()                                                         \
-  127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113,   \
-      112, 111, 110, 109, 108, 107, 106, 105, 104, 103, 102, 101, 100, 99, 98, \
-      97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80,  \
-      79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62,  \
-      61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44,  \
-      43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26,  \
-      25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, \
-      6, 5, 4, 3, 2, 1, 0
+    127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, \
+        112, 111, 110, 109, 108, 107, 106, 105, 104, 103, 102, 101, 100, 99,   \
+        98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82,    \
+        81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65,    \
+        64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48,    \
+        47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31,    \
+        30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14,    \
+        13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
 #define _INTL_NARG_(...) _INTL_128TH_ARG(__VA_ARGS__)
 
 #define NARG(...)        _INTL_NARG_(__VA_ARGS__, _INTL_RSEQ_N())
 #define MACRO_VAR(_name) _INTL_MACRO_VAR(_name, __LINE__)
 
 #define defer(...)                                                             \
-  for (i32 MACRO_VAR(i) = 0; MACRO_VAR(i) != 1; MACRO_VAR(i)++, __VA_ARGS__)
+    for (i32 MACRO_VAR(i) = 0; MACRO_VAR(i) != 1; MACRO_VAR(i)++, __VA_ARGS__)
 
 #define IMIN(x, y) (x < y ? x : y)
 #define IMAX(x, y) (x > y ? x : y)

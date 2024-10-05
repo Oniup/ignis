@@ -1,13 +1,13 @@
 if (${BUILD_LIBRARY})
-  add_subdirectory(ignis)
-  add_subdirectory(lib)
+    add_subdirectory(ignis)
+    add_subdirectory(lib)
 
-  if (${BUILD_TESTS})
-    add_subdirectory(tests)
-  endif()
+    if (${BUILD_TESTS})
+        add_subdirectory(tests)
+    endif()
 endif()
 
-if (${BUILD_APP})
-  add_subdirectory(app)
+if (${BUILD_EDITOR})
+    add_subdirectory(editor)
 endif()
 

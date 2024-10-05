@@ -18,9 +18,9 @@ AlignConsecutiveBitFields: true
 AlignConsecutiveDeclarations: true
 AlignConsecutiveMacros: true
 # Indentation
-IndentWidth: 2
+IndentWidth: 4
 IndentWrappedFunctionNames: true
-ConstructorInitializerIndentWidth: 4
+ConstructorInitializerIndentWidth: 6
 PackConstructorInitializers: NextLineOnly
 AllowShortFunctionsOnASingleLine: InlineOnly
 IndentPPDirectives: AfterHash
